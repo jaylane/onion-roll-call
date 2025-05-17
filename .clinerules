@@ -1,0 +1,45 @@
+# Cline's Project Intelligence for Onion Roll Call
+
+## Core Directives & Workflow
+1.  **Memory Bank is Paramount:** At the start of EVERY session/task, ALL files in the `memory-bank/` directory MUST be read. This is non-negotiable due to memory resets.
+    -   Core files: `projectbrief.md`, `productContext.md`, `systemPatterns.md`, `techContext.md`, `activeContext.md`, `progress.md`.
+    -   Order of reading should generally follow the dependency graph: Brief -> Product/System/Tech Context -> Active Context -> Progress.
+2.  **Memory Bank Updates:**
+    -   Update when new project patterns are discovered.
+    -   Update after implementing significant changes.
+    -   Update when the user explicitly requests with "**update memory bank**". This requires a full review of ALL memory bank files.
+    -   Update when context needs clarification.
+    -   Focus on `activeContext.md` and `progress.md` for tracking current state.
+3.  **`.clinerules` Maintenance:** This file should be updated with:
+    -   Critical implementation paths.
+    -   User preferences and workflow patterns observed.
+    -   Project-specific coding patterns or architectural decisions.
+    -   Known challenges and their workarounds/solutions.
+    -   Evolution of project decisions.
+    -   Tool usage patterns that are effective for this project.
+4.  **Error Handling & Verification:**
+    -   When a fix is applied (e.g., installing a package for a type error), explicitly verify the fix. This could involve:
+        -   Checking VSCode's reported errors.
+        -   Running type-checking commands (e.g., `bun tsc`, `bun svelte-check`).
+        -   Attempting to build or run the relevant part of the application.
+    -   Always redirect command output to a log file for review if the output is critical or complex: `your_command [args] &> output.log`.
+
+## Initial Project Setup & Patterns
+-   **TypeScript & Node.js:** The project uses TypeScript. If `process` or other Node.js globals are used, ensure `@types/node` is installed. The initial task involved fixing an error related to this.
+-   **Environment Variables:** `DATABASE_URL` is critical and sourced from `process.env`. A `.env` file is expected. `drizzle.config.ts` explicitly checks for `DATABASE_URL`.
+-   **Drizzle ORM:**
+    -   Configuration: `drizzle.config.ts`
+    -   Schema: `src/lib/server/db/schema.ts`
+    -   Dialect: `postgresql`
+-   **SvelteKit Structure:** Standard SvelteKit file and directory layout.
+-   **Bun Package Manager:** Use `bun` for package management and script execution (e.g., `bun install`, `bun run dev`).
+
+## Communication & Task Execution
+-   Be direct and technical in responses. Avoid conversational fluff.
+-   Iterate on tasks: one tool use per message, wait for confirmation/results.
+-   When creating new projects/features, organize files logically within a dedicated directory.
+-   Default to `replace_in_file` for small, targeted changes. Use `write_to_file` for new files or extensive rewrites. Be mindful of auto-formatting affecting `SEARCH` blocks.
+
+## User Preferences (Observed/Stated)
+-   The user has a strong preference for maintaining the Memory Bank system meticulously. Adherence to this is a top priority.
+-   The user provides detailed custom instructions that must be followed.
